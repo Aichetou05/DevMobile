@@ -3,6 +3,7 @@ package com.example.taskmenager;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.content.ContentValues;
 
 import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper{
@@ -36,6 +37,42 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 new String[]{username, email, password});
         return cursor.getCount() > 0;
     }
+
+
+    public boolean checkEmailExists(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM users WHERE email = ?", new String[]{email});
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        return exists;
+    }
+
+    public boolean updatePassword(String email, String newPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("password", newPassword);
+        int rows = db.update("users", values, "email=?", new String[]{email});
+        return rows > 0;
+    }
+
+    public boolean insertUser(String username, String email, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("username", username);
+        values.put("email", email);
+        values.put("password", password);
+        long result = db.insert("users", null, values);
+        return result != -1;
+    }
+
+    public boolean checkUserExistence(String username, String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM users WHERE username = ? OR email = ?", new String[]{username, email});
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        return exists;
+    }
+
 
 
 }
