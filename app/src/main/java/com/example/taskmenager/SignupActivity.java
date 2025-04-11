@@ -2,7 +2,6 @@ package com.example.taskmenager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -50,7 +49,7 @@ public class SignupActivity extends AppCompatActivity {
                     boolean success = dbHelper.insertUser(username, email, password);
                     if (success) {
                         Toast.makeText(this, "Signup successful!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(this, LoginActivity.class));
+                        startActivity(new Intent(this, HomeActivity.class));
                         finish();
                     } else {
                         Toast.makeText(this, "Signup failed!", Toast.LENGTH_SHORT).show();

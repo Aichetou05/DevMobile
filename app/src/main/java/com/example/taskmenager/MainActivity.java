@@ -1,60 +1,79 @@
 package com.example.taskmenager;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.*;
-import androidx.appcompat.app.AppCompatActivity;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView todayDate;
-    EditText newTaskInput, dontForgetInput, noteInput;
-    Button addTaskButton;
-    ListView taskListView;
-    ArrayAdapter<String> taskAdapter;
-    ArrayList<String> taskList;
+    EditText usernameInput,emailInput, passwordInput;
+    Button loginButton;
+    TextView singnup,forgotpass;
+
+    DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialiser les vues
-        todayDate = findViewById(R.id.todayDate);
-        newTaskInput = findViewById(R.id.newTaskInput);
-        addTaskButton = findViewById(R.id.addTaskButton);
-        taskListView = findViewById(R.id.taskListView);
-        dontForgetInput = findViewById(R.id.dontForgetInput);
-        noteInput = findViewById(R.id.noteInput);
+        // 1. Lier les composants
+        usernameInput = findViewById(R.id.username);
+        emailInput = findViewById(R.id.email);
+        passwordInput = findViewById(R.id.password);
+        loginButton = findViewById(R.id.loginButton);
+        singnup = findViewById(R.id.singupText);
+        forgotpass = findViewById(R.id.forgetPass);
 
-        // Afficher la date actuelle
-        String date = new SimpleDateFormat("EEEE dd MMMM yyyy", Locale.getDefault()).format(new Date());
-        todayDate.setText(date);
 
-        // To-Do List setup
-        taskList = new ArrayList<>();
-        taskAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, taskList);
-        taskListView.setAdapter(taskAdapter);
+        // 2. Initialiser la base de données
+        dbHelper = new DatabaseHelper(this);
 
-        // Ajouter une tâche
-        addTaskButton.setOnClickListener(v -> {
-            String task = newTaskInput.getText().toString().trim();
-            if (!task.isEmpty()) {
-                taskList.add(task);
-                taskAdapter.notifyDataSetChanged();
-                newTaskInput.setText("");
-            } else {
-                Toast.makeText(this, "Please enter a task", Toast.LENGTH_SHORT).show();
+        // 3. Action bouton login
+        loginButton.setOnClickListener(v -> {
+            String usernamer = usernameInput.getText().toString();
+            String email = emailInput.getText().toString();
+            String password = passwordInput.getText().toString();
+
+
+            if(usernamer.isEmpty() || email.isEmpty() || password.isEmpty()){
+                Toast.makeText(this,"Please fill all fields", Toast.LENGTH_SHORT).show();
+            }else{
+                Boolean valid = dbHelper.checkUser(usernamer,email,password);
+                if(valid){
+                    Toast.makeText(this,"Login Successful!",Toast.LENGTH_SHORT).show();
+                    Intent intnet = new Intent(this,HomeActivity.class);
+                    startActivity(intnet);
+                    finish();
+                }else{
+                    Toast.makeText(this,"Invalid please try again!",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        // Long click pour supprimer une tâche
-        taskListView.setOnItemLongClickListener((parent, view, position, id) -> {
-            taskList.remove(position);
-            taskAdapter.notifyDataSetChanged();
-            return true;
+        // 4. Action pour inscription
+        singnup.setOnClickListener(v -> {
+            //vers une autre activity 4e nektbou yak youda7 lkm la tm7ouh
+            Intent intent = new Intent(this,SignupActivity.class);
+            startActivity(intent);
+        });
+
+        //yak tevehmou 4i parti l mot de passe oublier
+        forgotpass.setOnClickListener(v -> {
+            Toast.makeText(this,"Password recovery no implemented ",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ForgetPasswordActivity.class);
+            startActivity(intent);
         });
     }
 }
+

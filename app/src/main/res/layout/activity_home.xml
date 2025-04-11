@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Nav Bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/background"
+                android:contentDescription="Logo" />
+
+            <EditText
+                android:layout_width="218dp"
+                android:layout_height="52dp"
+                android:layout_marginHorizontal="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_editext"
+                android:hint="Search..."
+                android:paddingHorizontal="10dp" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/search"
+                android:contentDescription="Search" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/notification"
+                android:contentDescription="Notifications" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/account"
+                android:contentDescription="Profile"
+                android:scaleType="centerCrop"/>
+        </LinearLayout>
+
+        <!-- Date du jour -->
+        <TextView
+            android:id="@+id/todayDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="16dp"
+            android:text="Aujourd’hui : " />
+
+        <!-- Ajout Tâche -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <EditText
+                android:id="@+id/newTaskInput"
+                android:layout_width="308dp"
+                android:layout_height="59dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_editext"
+                android:hint="Nouvelle tâche"
+                android:padding="10dp"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/addTaskButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ajouter"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="@color/primary"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <!-- Liste des tâches -->
+        <ListView
+            android:id="@+id/taskListView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="12dp"
+            android:divider="@color/secondairy2"
+            android:dividerHeight="1dp"/>
+
+        <!-- Don't Forget -->
+        <EditText
+            android:id="@+id/dontForgetInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="Don’t forget..."
+            android:minLines="3"
+            android:background="@drawable/custom_editext"
+            android:padding="12dp"
+            android:textColor="@color/black" />
+
+        <!-- Petite note -->
+        <EditText
+            android:id="@+id/noteInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Petite note..."
+            android:minLines="4"
+            android:background="@drawable/custom_editext"
+            android:padding="12dp"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+</ScrollView>
+
